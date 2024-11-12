@@ -8,10 +8,15 @@ header-img: "img/post-bg-js-module.jpg"
 tags:
     - 代理工具
     - Homeproxy
+    - 教程
 ---
 
 一键快速订阅、生成 Immortalwrt/Openwrt (23.0x+) Homeproxy 界面绝大多数常用配置。
+
+仓库地址：https://github.com/thisIsIan-W/homeproxy-autogen-configuration
+
 <br/>
+
 <br/>
 
 ## 脚本功能
