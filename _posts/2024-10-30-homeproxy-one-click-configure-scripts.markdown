@@ -4,7 +4,7 @@ title:      "Homeproxy 一键配置脚本使用说明"
 subtitle:   "适用于 Immortalwrt & Openwrt 23.0x.x+ Homeproxy 插件的一键配置脚本"
 date:       2024-10-30
 author:     "Ian"
-header-img: "img/post-bg-js-version.jpg"
+header-img: "img/post-bg-js-module.jpg"
 tags:
     - 代理工具
     - Homeproxy
@@ -43,7 +43,7 @@ tags:
 2. 点击本仓库右侧绿色 `<> Code` 按钮并下载zip包到你的设备上并自定义 `rules_*.sh` 文件中的配置(下方提供详细说明);
 3. 把2个脚本上传到你的设备上，目录随意，并赋予其执行权限，最后执行指定脚本;
 
-```shell
+```bash
 # 首先需要确保当前账户为 root，类似于：(请自行搜索解决)
 root@ImmortalWrt:~#
 
@@ -71,17 +71,18 @@ bash generate_homeproxy_rules.sh
 <br/>
 
 ### 参数说明
-`注意：除经过特殊说明的情况外，以下3个列表的内部 ***标签名*** --> **不可重复**，仅支持英文大小写、下划线_、数字。`<br/>
+`注意：除经过特殊说明的情况外，以下3个列表的内部 '标签名' --> 不可重复！！！仅支持英文大小写、下划线_、数字。`<br/>
 <br/>
 
 #### SUBSCRIPTION_URLS
 机场或代理服务器订阅链接(可选)。<br/>
 格式为： `"URL#自定义标签名"`。其中 '自定义标签名' 支持中文，但需要确保脚本的编码为 `UTF-8`.<br/><br/>
+
 * 如果你提供了链接，那么脚本会在运行时自动帮你添加、订阅、生成节点到 Homeproxy 中。<br/>
 * 如果你不想使用此功能，直接删除整个 `SUBSCRIPTION_URLS=(xxx)` 代码块即可。<br/>
 
 `提示：你提供的链接将仅用于调用 Homeproxy 订阅功能快速生成节点信息，不会出现隐私安全问题，请放心使用！`<br/>
-```shell
+```bash
 SUBSCRIPTION_URLS=(
   "https://abc.xyz/subscribe?token=123#机场1"
   "https://yhb.com/subscribe?token=uhjk#机场2"
@@ -129,12 +130,12 @@ DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
 <br/>
 
 
-* 命名规则为：***"标签名|URL(s)"***
+* 格式为："标签名|URL(s)"
 * DNS 服务器可随意增删修改、调整顺序
 * 同一条 URL 可以在同一个标签内 或 多个标签内多次出现
 * URL(s) 支持: UDP, TCP, DoT, DoH, and RCode.
 
-```shell
+```bash
 # 可以在下方添加更多
 DNS_SERVERS=(
   # 会生成一条名称为 dns_server_google 的 DNS服务商
@@ -154,7 +155,7 @@ DNS_SERVERS=(
 <br/>
 
 **推荐写法**
-```shell
+```bash
 #
 # RULESET_URLS 中的标签名作为 DNS_SERVERS 中标签名的前缀(忽略 reject_out 和 direct_out 标签)
 # 那么 DNS服务器 和 DNS规则 功能中相同前缀的出站会被自动勾选
@@ -207,7 +208,7 @@ DNS_SERVERS=(
 #### 错误写法示例
 适用于 `RULESET_URLS` 以及 `DNS_SERVERS`.
 
-```shell
+```bash
 # 错误写法一(双引号不允许另起一行书写)：
 RULESET_URLS=(
   "google|url
@@ -226,7 +227,6 @@ RULESET_URLS=(
   url2"
 )
 ```
-
 
 <br/>
 <br/>
