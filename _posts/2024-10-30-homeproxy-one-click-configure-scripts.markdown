@@ -77,13 +77,15 @@ bash generate_homeproxy_rules.sh
 <br/>
 
 #### SUBSCRIPTION_URLS
-机场或代理服务器订阅链接(可选)。<br/>
-格式为： `"URL#自定义标签名"`。其中 '自定义标签名' 支持中文，但需要确保脚本的编码为 `UTF-8`.<br/><br/>
+机场或代理服务器订阅链接(可选)。
 
-* 如果你提供了链接，那么脚本会在运行时自动帮你添加、订阅、生成节点到 Homeproxy 中。<br/>
-* 如果你不想使用此功能，直接删除整个 `SUBSCRIPTION_URLS=(xxx)` 代码块即可。<br/>
+格式为： `"URL#自定义标签名"`。其中 '自定义标签名' 支持中文，但需要确保脚本的编码为 `UTF-8`.
 
-`提示：你提供的链接将仅用于调用 Homeproxy 订阅功能快速生成节点信息，不会出现隐私安全问题，请放心使用！`<br/>
+* 如果你提供了链接，那么脚本会在运行时自动帮你添加、订阅、生成节点到 Homeproxy 中。
+* 如果你不想使用此功能，直接删除整个 `SUBSCRIPTION_URLS=(xxx)` 代码块即可。
+
+`提示：你提供的链接将仅用于调用 Homeproxy 订阅功能快速生成节点信息，不会出现隐私安全问题，请放心使用！`
+
 ```bash
 SUBSCRIPTION_URLS=(
   "https://abc.xyz/subscribe?token=123#机场1"
@@ -97,9 +99,7 @@ SUBSCRIPTION_URLS=(
 #### RULESET_URLS
 规则集列表。
 
-格式为："标签名|URL(s)"
-
-
+格式为：`标签名|URL(s)`
 
 * `direct_out(直连)` 和 `reject_out(广告&隐私)` 为保留标签名称不可更改，但如果不想使用它们，可直接删除 `direct_out` 或 `reject_out` 行所有内容；
 * 顺序可以随意调整，可以随意添加、修改其内容，`但同一条规则集url只允许出现一次`！
@@ -131,9 +131,7 @@ SUBSCRIPTION_URLS=(
 #### DNS_SERVERS
 DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
 
-格式为："标签名|URL(s)"
-
-
+格式为：`标签名|URL(s)`
 
 * DNS 服务器可随意增删修改、调整顺序
 * 同一条 URL 可以在同一个标签内 或 多个标签内多次出现
