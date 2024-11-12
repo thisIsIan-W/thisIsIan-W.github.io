@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      "Homeproxy 一键配置脚本使用说明"
-subtitle:   "适用于 Immortalwrt & Openwrt 23.0x.x+ Homeproxy 插件的一键配置脚本"
+subtitle:   "Homeproxy 配置教程"
 date:       2024-10-30
 author:     "Ian"
 header-img: "img/post-bg-js-module.jpg"
