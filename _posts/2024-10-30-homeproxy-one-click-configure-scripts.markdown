@@ -23,7 +23,7 @@ tags:
 <br/>
 
 ## 注意事项
-* 对 Homeproxy 有基本使用经验 ---> 重要！！！
+* 对 Homeproxy 有基本使用经验
 * 使用脚本前请先更新本地 sing-box 版本至最新版(本条可选，稳定/beta/alpha版本都可)
   * 下载内核后上传到设备的 `/usr/bin` 目录下覆盖原文件即可(注意备份及权限)
 * 安装或更新 HP 后，如出现界面异常等问题，手动清除浏览器缓存，或使用新的无痕标签页重新打开 HP 界面
@@ -31,8 +31,10 @@ tags:
   * 参考 [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh) 文件
 * 按照机场节点或代理服务器分流：
   * 参考 [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh) 或 [rules_based_on_proxy_servers.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_proxy_servers.sh) 文件
-  <br/>
-  <br/>
+
+
+<br/>
+<br/>
 
 
 ## 使用手册
@@ -93,9 +95,13 @@ SUBSCRIPTION_URLS=(
 <br/>
 
 #### RULESET_URLS
-规则集列表。<br/>
-格式为："标签名|URL(s)"
+规则集列表。
+
 <br/>
+格式为："标签名|URL(s)"
+
+<br/>
+
 <br/>
 
 * `direct_out(直连)` 和 `reject_out(广告&隐私)` 为保留标签名称不可更改，但如果不想使用它们，可直接删除 `direct_out` 或 `reject_out` 行所有内容；
@@ -127,7 +133,9 @@ SUBSCRIPTION_URLS=(
 
 #### DNS_SERVERS
 DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
+
 <br/>
+
 
 
 * 格式为："标签名|URL(s)"
@@ -135,7 +143,7 @@ DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
 * 同一条 URL 可以在同一个标签内 或 多个标签内多次出现
 * URL(s) 支持: UDP, TCP, DoT, DoH, and RCode.
 
-```bash
+```txt
 # 可以在下方添加更多
 DNS_SERVERS=(
   # 会生成一条名称为 dns_server_google 的 DNS服务商
@@ -155,7 +163,7 @@ DNS_SERVERS=(
 <br/>
 
 **推荐写法**
-```bash
+```txt
 #
 # RULESET_URLS 中的标签名作为 DNS_SERVERS 中标签名的前缀(忽略 reject_out 和 direct_out 标签)
 # 那么 DNS服务器 和 DNS规则 功能中相同前缀的出站会被自动勾选
@@ -208,7 +216,7 @@ DNS_SERVERS=(
 #### 错误写法示例
 适用于 `RULESET_URLS` 以及 `DNS_SERVERS`.
 
-```bash
+```txt
 # 错误写法一(双引号不允许另起一行书写)：
 RULESET_URLS=(
   "google|url
