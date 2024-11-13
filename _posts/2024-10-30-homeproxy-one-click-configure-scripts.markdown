@@ -1,19 +1,19 @@
 ---
 layout:     post
-title:      "Homeproxy 一键配置脚本使用说明"
-subtitle:   "Homeproxy 配置教程"
+title:      "homeproxy 一键配置脚本使用说明"
+subtitle:   "homeproxy 配置教程"
 date:       2024-10-30
 author:     "Ian"
 header-img: "img/post-bg-js-module.jpg"
 tags:
     - 代理工具
-    - Homeproxy
-    - 教程
+    - homeproxy
+    - 配置教程
 ---
 
 
 
-一键快速订阅、生成 Immortalwrt/Openwrt (23.0x+) Homeproxy 界面绝大多数常用配置。
+一键快速订阅、生成 Immortalwrt/Openwrt (23.0x+) homeproxy 界面绝大多数常用配置。
 
 仓库地址：[https://github.com/thisIsIan-W/homeproxy-autogen-configuration](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
 
@@ -25,7 +25,7 @@ tags:
 
 ## 脚本功能
 * 一键快速订阅你的所有机场或代理服务器节点
-* 一键生成 出站规则、出站规则列表、DNS服务器、DNS规则列表、默认出站配置、自定义节点、克拉斯 API配置 以及 规则详情 等
+* 一键生成 出站规则、出站规则列表、DNS服务器、DNS规则列表、默认出站配置、自定义节点 以及 规则详情 等
 * 支持 `3种` 方式定制上述规则配置
 * 仅支持 `自定义路由模式`
 
@@ -34,7 +34,7 @@ tags:
 <br/>
 
 ## 使用脚本前
-* 需要先从 Immortalwrt/Openwrt 应用市场安装最新版本的 Homeproxy
+* 需要先从 Immortalwrt/Openwrt 应用市场安装最新版本的 homeproxy
 * 请先更新本地 sing-box 版本至最新版(可选，稳定/beta/alpha版本都可，1.10.0-Alpha25 之下不支持 Adguard Home 规则)
   * 下载内核后上传到设备的 `/usr/bin` 目录下覆盖原文件即可 (注意备份及权限)
 * 安装或更新 HP 后，如出现界面异常等问题，手动清除浏览器缓存，或使用新的无痕标签页重新打开 HP 界面
@@ -48,7 +48,7 @@ tags:
 
 推荐使用 VSCode 等编辑器更改配置内容。
 
-1. 从你的系统应用市场安装 Homeproxy;
+1. 从你的系统应用市场安装 homeproxy;
 2. 点击本仓库右侧绿色 `<> Code` 按钮并下载zip包到你的设备上并自定义 `rules_*.sh(下方三个文件任选其一)` 文件中的配置(下方提供详细说明);
    1. 按照规则集分流 ---> [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh)
    2. 按照节点分流 ---> [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh)
@@ -92,7 +92,7 @@ bash generate_homeproxy_rules.sh
 
 ### 自用配置
 
-懒得看下方 [参数说明](#param-description) 的用户可直接参考下方配置。
+懒得看 [参数说明](#param-description) 的用户可直接参考下方配置。
 
 以下配置参考了 [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh) 文件 (作者主路由配置)。
 
@@ -228,7 +228,7 @@ DNS_SERVERS=(
 
 格式为： `"URL#自定义标签名"`。其中 '自定义标签名' 支持中文，但需要确保脚本的编码为 `UTF-8`.
 
-* 如果你提供了链接，那么脚本会在运行时自动帮你添加、订阅、生成节点到 Homeproxy 中。
+* 如果你提供了链接，那么脚本会在运行时自动帮你添加、订阅、生成节点到 homeproxy 中。
 * 如果你不想使用此功能，直接删除整个 `SUBSCRIPTION_URLS=(xxx)` 代码块即可。
 
 `提示：你提供的链接将仅用于调用 Homeproxy 订阅功能快速生成节点信息，不会出现隐私安全问题，请放心使用！`
