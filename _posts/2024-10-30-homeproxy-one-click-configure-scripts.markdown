@@ -33,15 +33,11 @@ tags:
 
 <br/>
 
-<br/>
-
 ## 使用脚本前
 * 需要先从 Immortalwrt/Openwrt 应用市场安装最新版本的 Homeproxy
 * 请先更新本地 sing-box 版本至最新版(可选，稳定/beta/alpha版本都可，1.10.0-Alpha25 之下不支持 Adguard Home 规则)
   * 下载内核后上传到设备的 `/usr/bin` 目录下覆盖原文件即可 (注意备份及权限)
 * 安装或更新 HP 后，如出现界面异常等问题，手动清除浏览器缓存，或使用新的无痕标签页重新打开 HP 界面
-
-<br/>
 
 <br/>
 
@@ -89,8 +85,6 @@ bash generate_homeproxy_rules.sh
    2. 路由节点(Routing Rules) --> 手动选择出站
    3. DNS服务器(DNS Servers) --> 更改剩余DNS服务器出站
 2. 保存并应用
-
-<br/>
 
 <br/>
 
@@ -166,8 +160,6 @@ DNS_SERVERS=(
 
 <br/>
 
-<br/>
-
 以下配置参考了 [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh) 文件。
 
 ```txt
@@ -226,12 +218,8 @@ DNS_SERVERS=(
 
 <br/>
 
-<br/>
-
 ### <a name="param-description">参数说明</a>
 `注意：以下3个列表的内部 '标签名' --> 不可重复！！！且标签名仅支持英文大小写、下划线_、数字的单一或组合形式。`
-
-<br/>
 
 <br/>
 
@@ -252,8 +240,6 @@ SUBSCRIPTION_URLS=(
   # More...
 )
 ```
-
-<br/>
 
 <br/>
 
@@ -293,8 +279,6 @@ SUBSCRIPTION_URLS=(
 
 <br/>
 
-<br/>
-
 
 #### DNS_SERVERS
 DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
@@ -328,8 +312,6 @@ DNS_SERVERS=(
   # More...
 )
 ```
-
-<br/>
 
 <br/>
 
