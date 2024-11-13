@@ -17,9 +17,11 @@ tags:
 
 仓库地址：[https://github.com/thisIsIan-W/homeproxy-autogen-configuration](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
 
+<br/>
 
+<br/>
 
-
+<br/>
 
 ## 脚本功能
 * 一键快速订阅你的所有机场或代理服务器节点
@@ -27,9 +29,11 @@ tags:
 * 支持 `3种` 方式定制上述规则配置
 * 仅支持 `自定义路由模式`
 
+<br/>
 
+<br/>
 
-
+<br/>
 
 ## 使用脚本前
 * 需要先从 Immortalwrt/Openwrt 应用市场安装最新版本的 Homeproxy
@@ -37,9 +41,11 @@ tags:
   * 下载内核后上传到设备的 `/usr/bin` 目录下覆盖原文件即可 (注意备份及权限)
 * 安装或更新 HP 后，如出现界面异常等问题，手动清除浏览器缓存，或使用新的无痕标签页重新打开 HP 界面
 
+<br/>
 
+<br/>
 
-
+<br/>
 
 
 ## 使用手册
@@ -84,15 +90,15 @@ bash generate_homeproxy_rules.sh
    3. DNS服务器(DNS Servers) --> 更改剩余DNS服务器出站
 2. 保存并应用
 
+<br/>
 
+<br/>
 
-
+<br/>
 
 ### 自用配置
 
 懒得看下方 [参数说明](#param-description) 的用户可直接参考下方配置。
-
-
 
 以下配置参考了 [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh) 文件 (作者主路由配置)。
 
@@ -158,7 +164,9 @@ DNS_SERVERS=(
 )
 ```
 
+<br/>
 
+<br/>
 
 以下配置参考了 [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh) 文件。
 
@@ -214,14 +222,18 @@ DNS_SERVERS=(
 )
 ```
 
+<br/>
 
+<br/>
 
-
+<br/>
 
 ### <a name="param-description">参数说明</a>
 `注意：以下3个列表的内部 '标签名' --> 不可重复！！！且标签名仅支持英文大小写、下划线_、数字的单一或组合形式。`
 
+<br/>
 
+<br/>
 
 #### SUBSCRIPTION_URLS
 机场或代理服务器订阅链接(可选)。
@@ -241,9 +253,9 @@ SUBSCRIPTION_URLS=(
 )
 ```
 
+<br/>
 
-
-
+<br/>
 
 #### RULESET_URLS
 
@@ -279,9 +291,9 @@ SUBSCRIPTION_URLS=(
 
 参考 [rules_based_on_proxy_servers.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_proxy_servers.sh) 文件。
 
+<br/>
 
-
-
+<br/>
 
 
 #### DNS_SERVERS
@@ -317,9 +329,11 @@ DNS_SERVERS=(
 )
 ```
 
+<br/>
 
+<br/>
 
-
+<br/>
 
 #### 错误写法
 适用于 `RULESET_URLS` 以及 `DNS_SERVERS`.
