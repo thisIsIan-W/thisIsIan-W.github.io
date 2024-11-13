@@ -154,7 +154,7 @@ DNS_SERVERS=(
   "Aliyun|223.5.5.5"
   
   "Default_DNS_Server|https://8.8.8.8/dns-query
-  rcode://refuse"
+  rcode://refused"
 )
 ```
 
