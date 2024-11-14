@@ -37,6 +37,7 @@ tags:
 * 需要先从 Immortalwrt/Openwrt 应用市场安装最新版本的 homeproxy
 * 请先更新本地 sing-box 版本至最新版(可选，稳定/beta/alpha版本都可，1.10.0-Alpha25 之下不支持 Adguard Home 规则)
   * 下载内核后上传到设备的 `/usr/bin` 目录下覆盖原文件即可 (注意备份及权限)
+  * **脚本支持自动升级你设备上的 sing-box 内核至最新版本**
 * 安装或更新 HP 后，如出现界面异常等问题，手动清除浏览器缓存，或使用新的无痕标签页重新打开 HP 界面
 
 <br/>
@@ -60,9 +61,9 @@ tags:
 # 首先需要确保当前账户为 root，类似于：(请自行搜索解决)
 root@ImmortalWrt:~#
 
-# 安装 bash(已安装则跳过此步)
+# 准备环境
 opkg update
-opkg install bash
+opkg install bash jq curl
 
 # 需要确保2个脚本在一个目录下
 # 举例，将2个脚本上传至 ImmortalWRT 或 OpenWRT 系统的 /tmp 目录下之后(可使用XShell/MobaXterm/PuTTY等客户端上传)：
