@@ -34,59 +34,202 @@ tags:
 
 <br/>
 
-## 使用脚本前
-* 需要先从 Immortalwrt/Openwrt 应用市场安装最新版本的 homeproxy
-* 请先更新本地 sing-box 版本至最新版(可选，稳定/beta/alpha版本都可，1.10.0-Alpha25 之下不支持 Adguard Home 规则)
-  * 下载内核后上传到设备的 `/usr/bin` 目录下覆盖原文件即可 (注意备份及权限)
-  * **脚本支持自动升级你设备上的 sing-box 内核至最新版本**
-* 安装或更新 HP 后，如出现界面异常等问题，手动清除浏览器缓存，或使用新的无痕标签页重新打开 HP 界面
+## 执行脚本前 (重要)
+
+你需要了解并实施的：
+
+* 打开浏览器`无痕标签页`
+* 从 Immortalwrt/Openwrt 应用市场安装最新版本的 homeproxy，`之后打开新的无痕标签页`
+* [点我](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/archive/refs/heads/main.zip) 下载脚本到你的设备上，其中：
+  * `generate_homeproxy_rules.sh` 脚本必须，`不需要任何变更`
+  * 参考以下任意一个脚本`自行修改内容`后，变更脚本文件名为 `rules.sh` 
+    * 按规则集分流模板：[rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh)
+    * 按节点分流模板：[rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh)
+    * 按代理服务分流模板：[rules_based_on_proxy_servers.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_proxy_servers.sh)
+
+* 可修改上述配置后保存并再次执行脚本以直接覆盖之前的配置！
 
 <br/>
 
 <br/>
-
 
 ## 使用手册
+
+### 操作步骤
 
 推荐使用 VSCode 等编辑器更改配置内容。
 
 1. 从你的系统应用市场安装 homeproxy;
-2. 点击本仓库右侧绿色 `<> Code` 按钮并下载zip包到你的设备上并自定义 `rules_*.sh(下方三个文件任选其一)` 文件中的配置(下方提供详细说明);
-   1. 按照规则集分流 ---> [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh)
-   2. 按照节点分流 ---> [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh)
-   3. 按照代理服务器分流 ---> [rules_based_on_proxy_servers.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_proxy_servers.sh)
-
-3. 把2个脚本上传到你的设备上，目录随意，并赋予其执行权限，最后执行指定脚本;
+2. 任选其一自定义 `rules_*.sh(上面提到的)` 文件中的配置，之后手动修改该文件名为 `rules.sh`;
+   
+3. 来到控制台：
 
 ```bash
-# 首先需要确保当前账户为 root，类似于：(请自行搜索解决)
-root@ImmortalWrt:~#
-
 # 准备环境
 opkg update
 opkg install bash jq curl
 
-# 需要确保2个脚本在一个目录下
-# 举例，将2个脚本上传至 ImmortalWRT 或 OpenWRT 系统的 /tmp 目录下之后(可使用XShell/MobaXterm/PuTTY等客户端上传)：
+# 确保2个脚本在一个目录下
+# 举例，将2个脚本上传至 /tmp 目录下之后：
 cd /tmp
 
-# 修改2个脚本的权限
+# 修改权限
 chmod +x generate_homeproxy_rules.sh
 chmod +x rules.sh
 
-# 执行脚本一键生成配置
+# 执行
 bash generate_homeproxy_rules.sh
 ```
 
 
 
-完成上述步骤后回到浏览器，刷新 homeproxy 界面 (推荐使用 `无痕标签页` 重新打开以避免因缓存导致的各种奇怪问题);
+之后回到浏览器，打开无痕标签页重新登陆后台，刷新 homeproxy 界面：
 
 1. 剩余需要自定义的配置：
    1. 路由设置(Routing Settings) --> 手动选择默认出站
    2. 路由节点(Routing Rules) --> 手动选择出站
    3. DNS服务器(DNS Servers) --> 更改剩余DNS服务器出站
-2. 保存并应用
+2. 保存并应用 ---> 完毕!
+
+<br/>
+
+<br/>
+
+
+
+以下为 `rules_*.sh` 文件内参数说明。
+
+
+
+---
+
+
+
+### <a name="param-description">参数说明</a>
+
+`注意：`
+
+除特殊说明外，列表内部 '标签名' 不可重复！！！
+
+标签名仅支持英文大小写、下划线_、数字的单一或组合形式。
+
+<br/>
+
+#### SUBSCRIPTION_URLS
+机场或代理服务器订阅链接(可选)。
+
+
+
+格式为： `"URL#标签名"`。
+
+其中 '标签名' 支持中文，但需要确保脚本文件的编码为 `UTF-8`.
+
+* 脚本会在运行时自动帮你添加、订阅、生成节点到 homeproxy 中
+* 如果你不想使用此功能，可直接删除整个 `SUBSCRIPTION_URLS=(xxx)` 代码块
+
+`提示：你提供的链接将仅用于调用 homeproxy 订阅功能快速生成节点信息，不会出现隐私安全问题，请放心使用！`
+
+```bash
+SUBSCRIPTION_URLS=(
+  "https://abc.xyz/subscribe?token=123#airport1"
+  "https://yhb.com/subscribe?token=uhj#airport2"
+  # More...
+)
+```
+
+<br/>
+
+#### RULESET_URLS
+
+规则集列表。
+
+格式为：`标签名|URL(s)`
+
+> 1. `direct_out(直连)` 和 `reject_out(广告&隐私)` 为保留标签名称不可更改
+>    * 如果不想使用它们，可直接删除整个 `direct_out` 或(和) `reject_out` 行所有内容
+> 2. `标签名` 及其内 `URL(s)` 可以随意添加、修改、删除、重排，`但同一条规则集url在整个 RULESET_URLS(xxx) 代码块中只允许出现一次`
+> 3. IP 类型的规则集文件不会被生成在 `DNS 规则` 中。脚本会自动判断你的规则集类型
+> 4. `URL(s)` 支持远程URL & 本地绝对路径、`.srs` 和 `.json` 类型文件
+> 5. `标签名` 的顺序为界面 `路由节点(Routing Nodes)`、`路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 功能中的条目顺序
+> 6. 标签名中的 `URL(s)` 的顺序(从上到下)：
+>    1. 为 `路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 每个条目中选中的 `规则集(Rule Set)` 选项顺序
+>    2. 为 `规则集(Rule Set)` 功能中的条目顺序
+
+
+
+再次强调，以下三种写法任选其一。
+
+##### 写法一：按照节点分组
+
+参考 [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh).
+
+##### 写法二：按照规则集合分组
+
+参考 [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh).
+
+##### 写法三：按照机场分组
+
+参考 [rules_based_on_proxy_servers.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_proxy_servers.sh).
+
+<br/>
+
+
+#### DNS_SERVERS
+DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
+
+格式为：`标签名|URL(s)`
+
+
+
+> 1. 标签名 的顺序为 `DNS服务器(DNS Servers)` 中每个条目顺序，一个标签支持多条 URLs
+> 2. DNS_SERVERS(xxx) 中的 标签名 及 URL(s) 可随意增删修改、调整顺序
+> 3. 同一条 URL 可以在同一个标签内 或 多个标签内多次出现
+> 4. URL(s) 支持: UDP, TCP, DoT, DoH, and RCode
+
+
+
+```txt
+DNS_SERVERS=(
+  # 会生成一条名称为 dns_server_google 的 DNS服务商
+  "google|url"
+
+  # 会生成3条名称分别为 dns_server_cloudflare_1、dns_server_cloudflare_2、dns_server_cloudflare_3 的 DNS服务商
+  # 且 url 会按照顺序分配给上述3个服务商
+  "cloudflare|
+  url1
+  url2
+  url3"
+
+  # More...
+)
+```
+
+<br/>
+
+<br/>
+
+#### 错误写法
+适用于 `RULESET_URLS` 以及 `DNS_SERVERS`.
+
+```txt
+# 错误写法一(双引号不允许另起一行书写)：
+RULESET_URLS=(
+  "google|url
+  "
+)
+# 错误写法二(不允许在url列表中使用注释符号 --> #)：
+RULESET_URLS=(
+  "google|url1
+  #url2
+  url3"
+)
+# 错误写法三(不允许在url列表中出现多余换行)：
+RULESET_URLS=(
+  "google|url1
+
+  url2"
+)
+```
 
 <br/>
 
@@ -101,6 +244,7 @@ bash generate_homeproxy_rules.sh
 ```txt
 #!/bin/bash
 
+# 订阅链接
 SUBSCRIPTION_URLS=(
   "https://airport01.subscription.url/subscribe?token=xxxx#机场01"
   "https://airport02.subscription.url/subscribe?token=yyyy#机场02"
@@ -155,6 +299,7 @@ DNS_SERVERS=(
   "Airport02_US_cf|https://1.1.1.1/dns-query"
   "Aliyun|223.5.5.5"
   
+  # https://8.8.8.8/dns-query 会被作为默认DNS服务器
   "Default_DNS_Server|https://8.8.8.8/dns-query
   rcode://refused"
 )
@@ -167,6 +312,7 @@ DNS_SERVERS=(
 ```txt
 #!/bin/bash
 
+# 订阅链接
 SUBSCRIPTION_URLS=(
   "https://airport01.subscription.url/subscribe?token=xxxx#机场01"
   "https://airport02.subscription.url/subscribe?token=yyyy#机场02"
@@ -209,10 +355,11 @@ DNS_SERVERS=(
   "HK_IPv4_ruleset01_opendns|https://doh.opendns.com/dns-query"
   "HK_IPv6_ruleset02_CF|https://1.1.1.1/dns-query"
   "US_California_Outbound|https://dns.google/dns-query"
-  "Others|URL"
-  "my_cn_direct|URL"
+  "Others|https://doh.opendns.com/dns-query"
+  "my_cn_direct|223.5.5.5"
 
-  "default_server|URL(s)"
+  # https://1.1.1.1/dns-query 会被作为默认DNS服务器
+  "default_server|https://1.1.1.1/dns-query"
 )
 ```
 
@@ -220,124 +367,11 @@ DNS_SERVERS=(
 
 <br/>
 
-### <a name="param-description">参数说明</a>
-`注意：以下3个列表的内部 '标签名' --> 不可重复！！！且标签名仅支持英文大小写、下划线_、数字的单一或组合形式。`
+## 后记
 
-<br/>
+deprecated 分支脚本不支持：
 
-#### SUBSCRIPTION_URLS
-机场或代理服务器订阅链接(可选)。
+* 更新 sing-box 版本
+* 订阅链接
 
-格式为： `"URL#自定义标签名"`。其中 '自定义标签名' 支持中文，但需要确保脚本的编码为 `UTF-8`.
-
-* 如果你提供了链接，那么脚本会在运行时自动帮你添加、订阅、生成节点到 homeproxy 中。
-* 如果你不想使用此功能，直接删除整个 `SUBSCRIPTION_URLS=(xxx)` 代码块即可。
-
-`提示：你提供的链接将仅用于调用 Homeproxy 订阅功能快速生成节点信息，不会出现隐私安全问题，请放心使用！`
-
-```bash
-SUBSCRIPTION_URLS=(
-  "https://abc.xyz/subscribe?token=123#机场1"
-  "https://yhb.com/subscribe?token=uhjk#机场2"
-  # More...
-)
-```
-
-<br/>
-
-#### RULESET_URLS
-
-规则集列表。
-
-格式为：`标签名|URL(s)`
-
-* `direct_out(直连)` 和 `reject_out(广告&隐私)` 为保留标签名称不可更改，但如果不想使用它们，可直接删除整个 `direct_out` 或(和) `reject_out` 行所有内容
-* `标签名` 及其内 `URL(s)` 的顺序可以随意调整，可以随意添加、修改、删除，`但同一条规则集url在整个 RULESET_URLS(xxx) 数组中只允许出现一次`
-* 脚本会自动根据你提供的 url 是否包含 `geosite`/`geoip`/`ip` 字符来判断它们是域名规则还是IP规则
-* `URL(s)` 支持远程URL & 本地绝对路径、`.srs` 和 `.json` 类型文件
-
-
-
-> 1. `标签名` 的顺序即为界面 `路由节点(Routing Nodes)`、`路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 功能中的条目优先级顺序
-> 2. 标签名中的 `URL(s)` 的顺序(从上到下)：
->    1. 即为 `路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 每个条目中选中的 `规则集(Rule Set)` 选项的优先级顺序，代表规则匹配次序
->    2. 即为 `规则集(Rule Set)` 功能中的条目优先级顺序，代表每个规则集文件的加载、下载次序
-
-
-
-以下三种写法任选其一。
-
-##### 写法一：按照节点分组
-
-参考 [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh) 文件。
-
-##### 写法二：按照规则集合分组
-
-参考 [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh) 文件。
-
-##### 写法三：按照机场分组
-
-参考 [rules_based_on_proxy_servers.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_proxy_servers.sh) 文件。
-
-<br/>
-
-
-#### DNS_SERVERS
-DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
-
-格式为：`标签名|URL(s)`
-
-* DNS 服务器可随意增删修改、调整顺序
-* 同一条 URL 可以在同一个标签内 或 多个标签内多次出现
-* URL(s) 支持: UDP, TCP, DoT, DoH, and RCode
-
-
-
-> 1. 所有的 `DNS服务商` 会默认选中 `IPv4` 作为解析策略，如需要使用 `IPv6`，请手动到界面选择
-> 2. `标签名` 的顺序即为 `DNS服务器(DNS Servers)` 中每个条目的次序
-> 3. 标签名中的多个 `URL(s)` 会自动从 1 开始为你自动生成相同名称前缀的、多个不同链接的DNS服务商。参考下方示例
-
-
-
-```txt
-DNS_SERVERS=(
-  # 会生成一条名称为 dns_server_google 的 DNS服务商
-  "google|url"
-
-  # 会生成3条名称分别为 dns_server_cloudflare_1、dns_server_cloudflare_2、dns_server_cloudflare_3 的 DNS服务商
-  # 且 url 会按照顺序分配给上述3个服务商
-  "cloudflare|
-  url1
-  url2
-  url3"
-
-  # More...
-)
-```
-
-<br/>
-
-<br/>
-
-#### 错误写法
-适用于 `RULESET_URLS` 以及 `DNS_SERVERS`.
-
-```txt
-# 错误写法一(双引号不允许另起一行书写)：
-RULESET_URLS=(
-  "google|url
-  "
-)
-# 错误写法二(不允许在url列表中使用注释符号 --> #)：
-RULESET_URLS=(
-  "google|url1
-  #url2
-  url3"
-)
-# 错误写法三(不允许在url列表中出现多余换行)：
-RULESET_URLS=(
-  "google|url1
-
-  url2"
-)
-```
+其余写法、功能基本一致。
