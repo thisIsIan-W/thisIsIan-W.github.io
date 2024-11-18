@@ -145,31 +145,16 @@ SUBSCRIPTION_URLS=(
 
 格式为：`标签名|URL(s)`
 
-> 1. `direct_out(直连)` 和 `reject_out(广告&隐私)` 为保留标签名称不可更改
->    * 如果不想使用它们，可直接删除整个 `direct_out` 或(和) `reject_out` 行所有内容
-> 2. `标签名` 及其内 `URL(s)` 可以随意添加、修改、删除、重排，`但同一条规则集url在整个 RULESET_URLS(xxx) 代码块中只允许出现一次`
-> 3. IP 类型的规则集文件不会被生成在 `DNS 规则` 中。脚本会自动判断你的规则集类型
-> 4. `URL(s)` 支持远程URL & 本地绝对路径、`.srs` 和 `.json` 类型文件
-> 5. `标签名` 的顺序为界面 `路由节点(Routing Nodes)`、`路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 功能中的条目顺序
-> 6. 标签名中的 `URL(s)` 的顺序(从上到下)：
->    1. 为 `路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 每个条目中选中的 `规则集(Rule Set)` 选项顺序
->    2. 为 `规则集(Rule Set)` 功能中的条目顺序
+1. direct_out(直连) 和 reject_out(广告&隐私) 为保留标签名称不可更改
+   * 如果不想使用它们，可直接删除整个 direct_out 或(和) reject_out 行所有内容
+2. 标签名 及其内 URL(s) 可以随意添加、修改、删除、重排，`但同一条规则集url在整个 RULESET_URLS(xxx) 代码块中只允许出现一次`
+4. URL(s) 支持远程URL & 本地绝对路径、`.srs` 和 `.json` 类型文件
+5. 标签名 的顺序为界面 `路由节点(Routing Nodes)`、`路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 功能中的条目顺序
+6. 标签名中的 URL(s) 的顺序(从上到下)：
+   1. 为 `路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 每个条目中选中的 `规则集(Rule Set)` 选项顺序
+   2. 为 `规则集(Rule Set)` 功能中的条目顺序
 
 
-
-再次强调，以下三种写法任选其一。
-
-##### 写法一：按照节点分组
-
-参考 [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh).
-
-##### 写法二：按照规则集合分组
-
-参考 [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh).
-
-##### 写法三：按照机场分组
-
-参考 [rules_based_on_proxy_servers.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_proxy_servers.sh).
 
 <br/>
 
@@ -179,14 +164,10 @@ DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
 
 格式为：`标签名|URL(s)`
 
-
-
-> 1. 标签名 的顺序为 `DNS服务器(DNS Servers)` 中每个条目顺序，一个标签支持多条 URLs
-> 2. DNS_SERVERS(xxx) 中的 标签名 及 URL(s) 可随意增删修改、调整顺序
-> 3. 同一条 URL 可以在同一个标签内 或 多个标签内多次出现
-> 4. URL(s) 支持: UDP, TCP, DoT, DoH, and RCode
-
-
+1. 标签名 的顺序为 `DNS服务器(DNS Servers)` 中每个条目顺序，一个标签支持多条 URLs
+2. DNS_SERVERS(xxx) 中的 标签名 及 URL(s) 可随意增删修改、调整顺序
+3. 同一条 URL 可以在同一个标签内 或 多个标签内多次出现
+4. URL(s) 支持: UDP, TCP, DoT, DoH, and RCode
 
 ```txt
 DNS_SERVERS=(
