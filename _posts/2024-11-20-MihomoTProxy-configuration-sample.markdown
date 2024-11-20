@@ -13,7 +13,9 @@ tags:
 
 
 
-多机场用户配置模板：[https://gist.github.com/thisIsIan-W/31ed4fdd3dd7a3185fba824ed891e4cb](https://gist.github.com/thisIsIan-W/31ed4fdd3dd7a3185fba824ed891e4cb)
+多机场配置模板：[https://gist.github.com/thisIsIan-W/31ed4fdd3dd7a3185fba824ed891e4cb](https://gist.github.com/thisIsIan-W/31ed4fdd3dd7a3185fba824ed891e4cb)
+
+多机场订阅转换模板：[https://gist.github.com/thisIsIan-W/e75bd2a518682a64d6a1bcb91e6d109c](https://gist.github.com/thisIsIan-W/e75bd2a518682a64d6a1bcb91e6d109c)
 
 <br/>
 
