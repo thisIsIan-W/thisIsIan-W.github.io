@@ -2,7 +2,7 @@
 layout:     post
 title:      "MihomoTProxy 多机场出站通用配置模板"
 subtitle:   "mihomotproxy 配置模板"
-date:       2024-10-30
+date:       2024-11-20
 author:     "Ian"
 header-img: "img/post-bg-js-module.jpg"
 tags:

@@ -15,9 +15,9 @@ tags:
 
 一键快速订阅、生成 Immortalwrt/Openwrt (23.0x+) homeproxy 界面绝大多数常用配置。
 
-仓库地址：[https://github.com/thisIsIan-W/homeproxy-autogen-configuration](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
+查看  --> [仓库地址](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
 
-<br/>
+查看  --> [精简版使用教程](https://drive.google.com/file/d/1qvmJk208NLANalCuY277Uvk0bUNGbrtv/view?usp=sharing)
 
 <br/>
 
@@ -34,42 +34,27 @@ tags:
 
 <br/>
 
-## 执行脚本前 (重要)
-
-你需要了解并实施的：
-
-* 打开浏览器`无痕标签页`
-* 从 Immortalwrt/Openwrt 应用市场安装最新版本的 homeproxy，`之后打开新的无痕标签页`
-* [点我](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/archive/refs/heads/main.zip) 下载脚本到你的设备上，其中：
-  * `generate_homeproxy_rules.sh` 脚本必须，`不需要任何变更`
-  * 参考以下任意一个脚本`自行修改内容`后，变更脚本文件名为 `rules.sh` 
-    * 按规则集分流模板：[rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh)
-    * 按节点分流模板：[rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh)
-    * 按代理服务分流模板：[rules_based_on_proxy_servers.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_proxy_servers.sh)
-
-* 可修改上述配置后保存并再次执行脚本以直接覆盖之前的配置！
-
-<br/>
-
-<br/>
-
 ## 使用手册
 
 ### 操作步骤
 
 推荐使用 VSCode 等编辑器更改配置内容。
 
-1. 从你的系统应用市场安装 homeproxy;
-2. 任选其一自定义 `rules_*.sh(上面提到的)` 文件中的配置，之后手动修改该文件名为 `rules.sh`;
-   
-3. 来到控制台：
+1. [点我](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/archive/refs/heads/main.zip) 下载脚本到你的设备上并解压，其中：
+   * `generate_homeproxy_rules.sh` 脚本必须，`不需要任何变更`
+   * `rules.sh`脚本必须，需要 `手动修改`
+     * 参考 rules.sh 文件内容，或：
+     * 参考 rules_templates 下任意一个脚本并`自行修改内容`后，变更文件名为 `rules.sh` 
+2. 从系统应用市场安装 homeproxy，安装成功后 `打开新的无痕标签页` 并重新登录到后台;
+3. 自定义 `rules.sh` 文件中的配置，保存;
+4. 来到控制台：
 
 ```bash
 # 准备环境
 opkg update
 opkg install bash jq curl
 
-# 确保2个脚本在一个目录下
+# 上传 generate_homeproxy_rules.sh 和 rules.sh 到某一文件夹下
 # 举例，将2个脚本上传至 /tmp 目录下之后：
 cd /tmp
 
@@ -97,13 +82,13 @@ bash generate_homeproxy_rules.sh
 
 
 
-以下为 `rules_*.sh` 文件内参数说明。
-
-
-
 ---
 
 
+
+以下为 `rules.sh` 文件内参数说明。
+
+<br/>
 
 ### <a name="param-description">参数说明</a>
 
@@ -118,14 +103,12 @@ bash generate_homeproxy_rules.sh
 #### SUBSCRIPTION_URLS
 机场或代理服务器订阅链接(可选)。
 
-
-
 格式为： `"URL#标签名"`。
 
 其中 '标签名' 支持中文，但需要确保脚本文件的编码为 `UTF-8`.
 
 * 脚本会在运行时自动帮你添加、订阅、生成节点到 homeproxy 中
-* 如果你不想使用此功能，可直接删除整个 `SUBSCRIPTION_URLS=(xxx)` 代码块
+* 若不想使用此功能，可直接删除整个 `SUBSCRIPTION_URLS=(xxx)` 代码块
 
 `提示：你提供的链接将仅用于调用 homeproxy 订阅功能快速生成节点信息，不会出现隐私安全问题，请放心使用！`
 
@@ -139,6 +122,8 @@ SUBSCRIPTION_URLS=(
 
 <br/>
 
+<br/>
+
 #### RULESET_URLS
 
 规则集列表。
@@ -146,15 +131,20 @@ SUBSCRIPTION_URLS=(
 格式为：`标签名|URL(s)`
 
 1. direct_out(直连) 和 reject_out(广告&隐私) 为保留标签名称不可更改
-   * 如果不想使用它们，可直接删除整个 direct_out 或(和) reject_out 行所有内容
+   * 若不想使用它们，删除整个 direct_out(xxx) 或(和) reject_out(xxx) 代码块
 2. 标签名 及其内 URL(s) 可以随意添加、修改、删除、重排，`但同一条规则集url在整个 RULESET_URLS(xxx) 代码块中只允许出现一次`
-4. URL(s) 支持远程URL & 本地绝对路径、`.srs` 和 `.json` 类型文件
-5. 标签名 的顺序为界面 `路由节点(Routing Nodes)`、`路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 功能中的条目顺序
-6. 标签名中的 URL(s) 的顺序(从上到下)：
-   1. 为 `路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 每个条目中选中的 `规则集(Rule Set)` 选项顺序
-   2. 为 `规则集(Rule Set)` 功能中的条目顺序
+3. URL(s) 支持远程URL & 本地绝对路径、`.srs` 和 `.json` 类型文件
+4. 你无须指定规则集文件名，脚本会自动识别并为你生成 URL(s) 文件名
 
 
+
+脚本会按照`标签名`从上到下的顺序：
+
+1. 为 `路由节点(Routing Nodes)`、`路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 功能生成所有以 标签名 命名的条目
+2. 为 `路由规则(Routing Rules)`、`DNS规则(DNS Rules)` 中的 `规则集(Rule Set)` 选中所有 标签名 对应的规则集
+3. 为 `规则集(Rule Set)` 功能生成所有规则集
+
+<br/>
 
 <br/>
 
@@ -227,6 +217,7 @@ RULESET_URLS=(
 
 # 订阅链接
 SUBSCRIPTION_URLS=(
+  # 若标签名包含中文，需要确保当前文件的编码为UTF-8，否则界面乱码
   "https://airport01.subscription.url/subscribe?token=xxxx#机场01"
   "https://airport02.subscription.url/subscribe?token=yyyy#机场02"
 )
@@ -295,6 +286,7 @@ DNS_SERVERS=(
 
 # 订阅链接
 SUBSCRIPTION_URLS=(
+  # 若标签名包含中文，需要确保当前文件的编码为UTF-8，否则界面乱码
   "https://airport01.subscription.url/subscribe?token=xxxx#机场01"
   "https://airport02.subscription.url/subscribe?token=yyyy#机场02"
 )
