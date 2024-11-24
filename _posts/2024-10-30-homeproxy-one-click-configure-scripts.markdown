@@ -17,8 +17,6 @@ tags:
 
 查看  --> [仓库地址](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
 
-查看  --> [精简版使用教程](https://drive.google.com/file/d/1qvmJk208NLANalCuY277Uvk0bUNGbrtv/view?usp=sharing)
-
 <br/>
 
 <br/>
