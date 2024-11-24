@@ -15,7 +15,9 @@ tags:
 
 一键快速订阅、生成 Immortalwrt/Openwrt (23.0x+) homeproxy 界面绝大多数常用配置。
 
-查看  --> [仓库地址](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
+查看  --> [https://github.com/thisIsIan-W/homeproxy-autogen-configuration](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
+
+教程  --> [https://www.youtube.com/watch?v=V1aiRqbFnyU](https://www.youtube.com/watch?v=V1aiRqbFnyU)
 
 <br/>
 
