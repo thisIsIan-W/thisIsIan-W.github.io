@@ -17,7 +17,7 @@ tags:
 
 查看  --> [https://github.com/thisIsIan-W/homeproxy-autogen-configuration](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
 
-教程  --> [https://www.youtube.com/watch?v=V1aiRqbFnyU](https://www.youtube.com/watch?v=V1aiRqbFnyU)
+教程  --> [https://www.youtube.com/watch?v=1Vy_UuW_X4A](https://www.youtube.com/watch?v=1Vy_UuW_X4A)
 
 <br/>
 
