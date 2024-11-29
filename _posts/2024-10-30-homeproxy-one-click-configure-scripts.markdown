@@ -17,7 +17,7 @@ tags:
 
 仓库  --> [https://github.com/thisIsIan-W/homeproxy-autogen-configuration](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
 
-视频  --> [https://www.youtube.com/watch?v=1Vy_UuW_X4A](https://www.youtube.com/watch?v=1Vy_UuW_X4A)
+视频  --> [https://www.youtube.com/watch?v=nV8_kVfJmTU](https://www.youtube.com/watch?v=nV8_kVfJmTU)
 
 <br/>
 
