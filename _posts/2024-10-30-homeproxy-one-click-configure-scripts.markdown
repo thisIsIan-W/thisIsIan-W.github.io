@@ -17,7 +17,7 @@ tags:
 
 仓库  --> [https://github.com/thisIsIan-W/homeproxy-autogen-configuration](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
 
-视频  --> [https://www.youtube.com/watch?v=nV8_kVfJmTU](https://www.youtube.com/watch?v=nV8_kVfJmTU)
+
 
 <br/>
 
@@ -28,6 +28,7 @@ tags:
 * 一键快速订阅你的所有机场或代理服务器节点
 * 一键生成 出站规则、出站规则列表、DNS服务器、DNS规则列表、默认出站配置、自定义节点 以及 规则详情 等
 * 支持 `3种` 方式定制上述规则配置
+* 解决因为误操作等问题导致的 HP 无法正常启动、使用问题
 * 仅支持 `自定义路由模式`
 
 <br/>
@@ -62,7 +63,7 @@ cd /tmp
 chmod +x generate_homeproxy_rules.sh
 chmod +x rules.sh
 
-# 执行
+# 执行(可重复执行此脚本)
 bash generate_homeproxy_rules.sh
 ```
 
@@ -70,7 +71,7 @@ bash generate_homeproxy_rules.sh
 
 之后回到浏览器，打开无痕标签页重新登陆后台，刷新 homeproxy 界面：
 
-1. 剩余需要自定义的配置：
+1. 其它需要你自定义的配置：
    1. 路由设置(Routing Settings) --> 手动选择默认出站
    2. 路由节点(Routing Rules) --> 手动选择出站
    3. DNS服务器(DNS Servers) --> 更改剩余DNS服务器出站
@@ -134,7 +135,7 @@ SUBSCRIPTION_URLS=(
    * 若不想使用它们，删除整个 direct_out(xxx) 或(和) reject_out(xxx) 代码块
 2. 标签名 及其内 URL(s) 可以随意添加、修改、删除、重排，`但同一条规则集url在整个 RULESET_URLS(xxx) 代码块中只允许出现一次`
 3. URL(s) 支持远程URL & 本地绝对路径、`.srs` 和 `.json` 类型文件
-4. 你无须指定规则集文件名，脚本会自动识别并为你生成 URL(s) 文件名
+4. 脚本会自动识别 链接/本地路径 中的文件名，并为你生成对应的规则集文件名
 
 
 
