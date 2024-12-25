@@ -295,6 +295,62 @@ DNS_SERVERS=(
 
 ## 后记
 
+### adblock_rules_update.sh
+
+* 自动下载并转换 AdGuard Home 规则集文件
+* 自动将该脚本注册到定时任务，默认每天的凌晨4点整执行一次
+* 最终生成的规则集文件路径为：`/etc/homeproxy/ruleset/adblockdns.srs`
+* 脚本执行过程的日志文件路径为：`/etc/homeproxy/ruleset/convert.log`
+  * 每当日志文件大小超过 1MB 时脚本会自动执行清理操作
+
+#### 操作步骤
+
+```bash
+# 准备环境，如已存在 bash 命令则忽略
+opkg update
+opkg install bash
+
+# 把该脚本上传到系统除 /tmp 目录以外的任意目录下，脚本代码默认使用的路径为: /etc
+# 然后：
+chmod +x /etc/adblock_rules_update.sh
+
+# 执行脚本(只需要手动执行一次即可，脚本会自动注册定时任务至 系统 - 计划任务 功能中)
+# 注意：
+#    此脚本涉及规则集转换操作，需要占用大量CPU资源
+bash /etc/adblock_rules_update.sh
+```
+
+
+
+#### 新增规则集URL
+
+更改 `adblock_rules_update.sh` 脚本以下内容：
+
+```bash
+#!/bin/bash
+
+# GitHub 镜像URL前缀。如失效，请到 https://ghproxy.link 获取最新前缀
+MIRROR_PREFIX="https://ghgo.xyz"
+# 调整定时任务的执行时间以及当前脚本的存放路径(可选)
+# 请阅读 https://github.com/immortalwrt/homeproxy/issues/161 中的内容
+CRONTAB_EXPR="0 4 * * * bash /etc/adblock_rules_update.sh"
+URLS=(
+  # 规则集数组，每行一条URL，需要使用英文半角双引号包裹
+  # 目前仅支持来自于 GitHub 的规则集链接
+  "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt"
+  "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/refs/heads/master/anti-ad-adguard.txt"
+  # More...
+)
+
+# 你不需要关心脚本其它内容，除非你了解自己在做什么......
+```
+
+<br/>
+
+<br/>
+
+### 其它
+
 deprecated 分支脚本不支持：
 
 * 更新 sing-box 版本
