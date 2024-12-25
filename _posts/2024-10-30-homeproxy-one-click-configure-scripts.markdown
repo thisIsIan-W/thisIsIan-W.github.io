@@ -295,7 +295,7 @@ DNS_SERVERS=(
 
 ## 后记
 
-### adblock_rules_update.sh
+### adblock_rules_update.sh(实验性)
 
 * 自动下载并转换 AdGuard Home 规则集文件
 * 自动将该脚本注册到定时任务，默认每天的凌晨4点整执行一次
@@ -310,14 +310,14 @@ DNS_SERVERS=(
 opkg update
 opkg install bash
 
-# 把该脚本上传到系统除 /tmp 目录以外的任意目录下，脚本代码默认使用的路径为: /etc
+# 把该脚本上传到系统除 /tmp 目录以外的任意目录下，脚本代码默认使用的路径为: /etc/homeproxy
 # 然后：
-chmod +x /etc/adblock_rules_update.sh
+chmod +x /etc/homeproxy/adblock_rules_update.sh
 
 # 执行脚本(只需要手动执行一次即可，脚本会自动注册定时任务至 系统 - 计划任务 功能中)
 # 注意：
 #    此脚本涉及规则集转换操作，需要占用大量CPU资源
-bash /etc/adblock_rules_update.sh
+bash /etc/homeproxy/adblock_rules_update.sh
 ```
 
 
@@ -333,7 +333,7 @@ bash /etc/adblock_rules_update.sh
 MIRROR_PREFIX="https://ghgo.xyz"
 # 调整定时任务的执行时间以及当前脚本的存放路径(可选)
 # 请阅读 https://github.com/immortalwrt/homeproxy/issues/161 中的内容
-CRONTAB_EXPR="0 4 * * * bash /etc/adblock_rules_update.sh"
+CRONTAB_EXPR="0 4 * * * bash '/etc/home''proxy/adblock_rules_update.sh'"
 URLS=(
   # 规则集数组，每行一条URL，需要使用英文半角双引号包裹
   # 目前仅支持来自于 GitHub 的规则集链接
