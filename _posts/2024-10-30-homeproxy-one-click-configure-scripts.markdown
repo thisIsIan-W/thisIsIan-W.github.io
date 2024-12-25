@@ -17,6 +17,8 @@ tags:
 
 仓库  --> [https://github.com/thisIsIan-W/homeproxy-autogen-configuration](https://github.com/thisIsIan-W/homeproxy-autogen-configuration)
 
+本 wiki 下方已给出示例配置，可酌情参考。
+
 
 
 <br/>
@@ -115,8 +117,8 @@ bash generate_homeproxy_rules.sh
 
 ```bash
 SUBSCRIPTION_URLS=(
-  "https://abc.xyz/subscribe?token=123#airport1"
-  "https://yhb.com/subscribe?token=uhj#airport2"
+  "https://abc.xyz/subscribe?token=123#proxy_server_01"
+  "https://yhb.com/subscribe?token=uhj#proxy_server_02"
   # More...
 )
 ```
@@ -130,6 +132,8 @@ SUBSCRIPTION_URLS=(
 规则集列表。
 
 格式为：`标签名|URL(s)`
+
+生成顺序：从上到下
 
 1. direct_out(直连) 和 reject_out(广告&隐私) 为保留标签名称不可更改
    * 若不想使用它们，删除整个 direct_out(xxx) 或(和) reject_out(xxx) 代码块
@@ -155,18 +159,26 @@ DNS服务器列表，在这里配置你想要使用的 ***DNS服务商***。
 
 格式为：`标签名|URL(s)`
 
+生成顺序：从上到下
+
 1. 标签名 的顺序为 `DNS服务器(DNS Servers)` 中每个条目顺序，一个标签支持多条 URLs
 2. DNS_SERVERS(xxx) 中的 标签名 及 URL(s) 可随意增删修改、调整顺序
 3. 同一条 URL 可以在同一个标签内 或 多个标签内多次出现
-4. URL(s) 支持: UDP, TCP, DoT, DoH, and RCode
+4. 最后一条 `标签名` 里的 `第一条URL` 会被作为 `默认DNS服务器` 选中
+   1. 请注意在 `路由设置 - 默认出站` 以及  `DNS 服务器 - 该服务器出站` 功能中勾选相同的出站以防止出现服务无法正常启动或使用的问题
+
+5. URL(s) 可填写类型: UDP, TCP, DoT, DoH, and RCode
 
 ```txt
 DNS_SERVERS=(
   # 会生成一条名称为 dns_server_google 的 DNS服务商
   "google|url"
 
-  # 会生成3条名称分别为 dns_server_cloudflare_1、dns_server_cloudflare_2、dns_server_cloudflare_3 的 DNS服务商
-  # 且 url 会按照顺序分配给上述3个服务商
+  # 会生成3条DNS服务器条目: 
+  #     dns_server_cloudflare_1
+  #     dns_server_cloudflare_2
+  #     dns_server_cloudflare_3
+  # 且 url 会按照顺序分配给上述3个服务器
   "cloudflare|
   url1
   url2
@@ -207,7 +219,7 @@ RULESET_URLS=(
 
 <br/>
 
-### 自用配置
+### 示例配置
 
 懒得看 [参数说明](#param-description) 的用户可直接参考下方配置。
 
@@ -227,113 +239,57 @@ SUBSCRIPTION_URLS=(
 # RULESET_URLS 中的标签名作为 DNS_SERVERS 中标签名的前缀(忽略 reject_out 和 direct_out 标签)
 # 那么 DNS服务器 和 DNS规则 功能中相同前缀的出站会被自动勾选
 # 两者中标签的顺序不需要保持一致
-# 
-# 更详细的解释内容，请参阅 rules_*.sh 文件！
 #
 RULESET_URLS=(
 
   "reject_out|/etc/homeproxy/ruleset/adblockdns.srs"
 
+  "HK_proxy_server_01|
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google.srs
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/googlefcm.srs
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google-play.srs
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google-cn.srs
+  https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/geo/geosite/google-trust-services@cn.srs
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/google-gemini.srs
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/google.srs"
+
+  "SG_proxy_server_01|
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-openai.srs
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-bing.srs
+  https://raw.githubusercontent.com/KaringX/karing-ruleset/sing/geo/geoip/ai.srs"
+
+  "SG_proxy_server_02|
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-discord.srs
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-twitch.srs
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-amazon.srs
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-amazon@cn.srs
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-amazontrust.srs"
+
+  "US_proxy_server_02|
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-twitter.srs
+  https://raw.githubusercontent.com/SagerNet/sing-geosite/refs/heads/rule-set/geosite-x.srs
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/twitter.srs
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/tiktok.srs"
+  
+  "US_IPV6_proxy_server_02|
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/telegram.srs
+  https://raw.githubusercontent.com/DustinWin/ruleset_geodata/sing-box-ruleset/telegramip.srs"
+  
   "direct_out|/etc/homeproxy/ruleset/MyDirect.json
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-microsoft@cn.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-azure@cn.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/apple-cn.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/cn.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/cn.srs"
-
-  "Airport01_HK|/etc/homeproxy/ruleset/MyProxy.json
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/google.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/googlefcm.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/google-play.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/google-cn.srs
-  https://github.com/KaringX/karing-ruleset/raw/sing/geo/geosite/google-trust-services@cn.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/google-gemini.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/google.srs"
-
-  "Airport02_US|/etc/homeproxy/ruleset/MyAI.json
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-twitter.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-x.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/twitter.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-openai.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-bing.srs
-  https://github.com/KaringX/karing-ruleset/raw/sing/geo/geoip/ai.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/tiktok.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/telegram.srs
-  https://github.com/DustinWin/ruleset_geodata/raw/sing-box-ruleset/telegramip.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-discord.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-twitch.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-amazon.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-amazon@cn.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-amazontrust.srs"
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geoip/cn.srs
+  https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/sing/geo/geosite/cn.srs"
 )
 
 DNS_SERVERS=(
-  "Airport01_HK_google|https://8.8.8.8/dns-query"
-  "Airport02_US_cf|https://1.1.1.1/dns-query"
-  "Aliyun|223.5.5.5"
+  "HK_proxy_server_01|https://1.1.1.1/dns-query"
+  "SG_proxy_server_01|https://1.1.1.1/dns-query"
+  "SG_proxy_server_01|https://1.1.1.1/dns-query"
+  "US_proxy_server_02|https://1.1.1.1/dns-query"
+  "US_IPV6_proxy_server_02|https://1.1.1.1/dns-query"
   
   # https://8.8.8.8/dns-query 会被作为默认DNS服务器
   "Default_DNS_Server|https://8.8.8.8/dns-query
   rcode://refused"
-)
-```
-
-<br/>
-
-以下配置参考了 [rules_based_on_rulesets.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_rulesets.sh) 文件。
-
-```txt
-#!/bin/bash
-
-# 订阅链接
-SUBSCRIPTION_URLS=(
-  # 若标签名包含中文，需要确保当前文件的编码为UTF-8，否则界面乱码
-  "https://airport01.subscription.url/subscribe?token=xxxx#机场01"
-  "https://airport02.subscription.url/subscribe?token=yyyy#机场02"
-)
-
-#
-# RULESET_URLS 中的标签名作为 DNS_SERVERS 中标签名的前缀(忽略 reject_out 和 direct_out 标签)
-# 那么 DNS服务器 和 DNS规则 功能中相同前缀的出站会被自动勾选
-# 两者中标签的顺序不需要保持一致
-# 
-# 更详细的解释内容，请参阅 rules_*.sh 文件！
-#
-RULESET_URLS(
-  "HK_IPv4_ruleset01|
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/google.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/google-cn.srs"
-
-  "HK_IPv6_ruleset02|
-  https://github.com/KaringX/karing-ruleset/raw/sing/geo/geosite/google-trust-services@cn.srs"
-
-  "US|
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-openai.srs
-  https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-bing.srs
-  https://github.com/KaringX/karing-ruleset/raw/sing/geo/geoip/ai.srs"
-
-  "Others|
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/telegram.srs"
-
-  "my_cn_direct|
-  /etc/homeproxy/ruleset/MyDirect.json"
-
-  "reject_out|/etc/homeproxy/ruleset/adblockdns.srs"
-
-  "direct_out|
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geoip/cn.srs
-  https://github.com/MetaCubeX/meta-rules-dat/raw/sing/geo/geosite/cn.srs"
-)
-
-DNS_SERVERS=(
-  "HK_IPv4_ruleset01_opendns|https://doh.opendns.com/dns-query"
-  "HK_IPv6_ruleset02_CF|https://1.1.1.1/dns-query"
-  "US_California_Outbound|https://dns.google/dns-query"
-  "Others|https://doh.opendns.com/dns-query"
-  "my_cn_direct|223.5.5.5"
-
-  # https://1.1.1.1/dns-query 会被作为默认DNS服务器
-  "default_server|https://1.1.1.1/dns-query"
 )
 ```
 
