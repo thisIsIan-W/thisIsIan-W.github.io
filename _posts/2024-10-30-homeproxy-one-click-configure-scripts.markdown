@@ -151,6 +151,31 @@ SUBSCRIPTION_URLS=(
 
 <br/>
 
+#### 错误写法
+适用于 `RULESET_URLS` 以及下方的 `DNS_SERVERS`.
+
+```txt
+# 错误写法一(双引号不允许另起一行书写)：
+RULESET_URLS=(
+  "google|url
+  "
+)
+# 错误写法二(不允许在url列表中使用注释符号 --> #)：
+RULESET_URLS=(
+  "google|url1
+  #url2
+  url3"
+)
+# 错误写法三(不允许在url列表中出现多余换行)：
+RULESET_URLS=(
+  "google|url1
+
+  url2"
+)
+```
+
+<br/>
+
 <br/>
 
 
@@ -192,38 +217,9 @@ DNS_SERVERS=(
 
 <br/>
 
-#### 错误写法
-适用于 `RULESET_URLS` 以及 `DNS_SERVERS`.
-
-```txt
-# 错误写法一(双引号不允许另起一行书写)：
-RULESET_URLS=(
-  "google|url
-  "
-)
-# 错误写法二(不允许在url列表中使用注释符号 --> #)：
-RULESET_URLS=(
-  "google|url1
-  #url2
-  url3"
-)
-# 错误写法三(不允许在url列表中出现多余换行)：
-RULESET_URLS=(
-  "google|url1
-
-  url2"
-)
-```
-
-<br/>
-
-<br/>
-
 ### 示例配置
 
 懒得看 [参数说明](#param-description) 的用户可直接参考下方配置。
-
-以下配置参考了 [rules_based_on_nodes.sh](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/blob/main/rules_based_on_nodes.sh) 文件 (作者主路由配置)。
 
 ```txt
 #!/bin/bash
