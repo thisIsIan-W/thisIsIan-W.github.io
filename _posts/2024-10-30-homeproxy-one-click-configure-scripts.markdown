@@ -83,7 +83,32 @@ bash generate_homeproxy_rules.sh
 
 <br/>
 
+---
 
+
+### 问题解决
+
+由于最近 GitHub 镜像加速服务不太稳定，可能导致下载 homeproxy 原始配置失败的问题。
+
+解决方法：
+
+你可以手动更改 `generate_homeproxy_rules.sh` 脚本中的第一行代码来解决此问题：
+
+```bash
+#!/bin/bash
+
+# 把双引号中的链接替换为你认为比较稳定的加速服务链接即可
+# 注意：链接末尾不要保留任何多余斜杠
+MIRROR_PREFIX_URL="https://ghp.p3terx.com"
+
+# 省略其它代码......
+```
+
+确认本地网络无问题、且加速链接可以在直连的方式下成功访问却还是无法正常下载，请提 issue ！
+
+<br/>
+
+<br/>
 
 ---
 
