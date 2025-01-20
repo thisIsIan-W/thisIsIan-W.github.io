@@ -26,12 +26,9 @@ tags:
 <br/>
 
 ## 脚本功能
-* 一键更新 sing-box 版本至最新
-* 一键快速订阅你的所有机场或代理服务器节点
-* 一键生成 出站规则、出站规则列表、DNS服务器、DNS规则列表、默认出站配置、自定义节点 以及 规则详情 等
-* 支持 `3种` 方式定制上述规则配置
-* 解决因为误操作等原因导致的 HP 无法正常启动、使用问题
-* 仅支持 `自定义路由模式`
+* 节省大量重复配置所需的时间；
+* 解决因为误操作等原因导致的 HP 无法正常启动、使用问题；
+* 仅支持 `自定义路由模式`。
 
 <br/>
 
@@ -41,35 +38,19 @@ tags:
 
 ### 操作步骤
 
-推荐使用 VSCode 等编辑器更改配置内容。
 
-1. [点我](https://github.com/thisIsIan-W/homeproxy-autogen-configuration/archive/refs/heads/main.zip) 下载脚本到你的设备上并解压，其中：
-   * `generate_homeproxy_rules.sh` 脚本必须，`不需要任何变更`
-   * `rules.sh`脚本必须，需要 `手动修改`
-     * 参考 rules.sh 文件内容，或：
-     * 参考 rules_templates 下任意一个脚本并`自行修改内容`后，变更文件名为 `rules.sh` 
-2. 从系统应用市场安装 homeproxy，安装成功后 `打开新的无痕标签页` 并重新登录到后台;
-3. 自定义 `rules.sh` 文件中的配置，保存;
-4. 来到控制台：
+
+通过使用 Secret Gist 或其它私有链接定制你的专属 [参考 rules.sh](https://gist.github.com/thisIsIan-W/3d4343c6e61e49f4c5ae6aa9115045bf) 配置，之后回到 ImmortalWrt/OpenWrt 系统：
 
 ```bash
 # 准备环境
 opkg update
 opkg install bash jq curl
 
-# 上传 generate_homeproxy_rules.sh 和 rules.sh 到某一文件夹下
-# 举例，将2个脚本上传至 /tmp 目录下之后：
-cd /tmp
-
-# 修改权限
-chmod +x generate_homeproxy_rules.sh
-chmod +x rules.sh
-
-# 执行(可重复执行此脚本)
-bash generate_homeproxy_rules.sh
+# 执行(可重复执行此代码)
+# https://ghp.p3terx.com/ 为镜像加速链接。如果不可用，自行将其替换为可用 URL 即可
+bash -c "$(curl -kfsSl https://ghp.p3terx.com/https://raw.githubusercontent.com/thisIsIan-W/homeproxy-autogen-configuration/refs/heads/main/generate_homeproxy_rules.sh)"
 ```
-
-
 
 之后回到浏览器，打开无痕标签页重新登陆后台，刷新 homeproxy 界面：
 
@@ -78,33 +59,6 @@ bash generate_homeproxy_rules.sh
    2. 路由节点(Routing Rules) --> 手动选择出站
    3. DNS服务器(DNS Servers) --> 更改剩余DNS服务器出站
 2. 保存并应用 ---> 完毕!
-
-<br/>
-
-<br/>
-
----
-
-
-### 问题解决
-
-由于最近 GitHub 镜像加速服务不太稳定，可能导致下载 homeproxy 原始配置失败的问题。
-
-解决方法：
-
-你可以手动更改 `generate_homeproxy_rules.sh` 脚本中的第一行代码来解决此问题：
-
-```bash
-#!/bin/bash
-
-# 把双引号中的链接替换为你认为比较稳定的加速服务链接即可
-# 注意：链接末尾不要保留任何多余斜杠
-MIRROR_PREFIX_URL="https://ghp.p3terx.com"
-
-# 省略其它代码......
-```
-
-确认本地网络无问题、且加速链接可以在直连的方式下成功访问却还是无法正常下载，请提 issue ！
 
 <br/>
 
@@ -128,7 +82,7 @@ MIRROR_PREFIX_URL="https://ghp.p3terx.com"
 
 <br/>
 
-#### SUBSCRIPTION_URLS
+#### SUBSCRIPTION_URLS(可选)
 机场或代理服务器订阅链接(可选)。
 
 格式为： `"URL#标签名"`。
@@ -313,72 +267,3 @@ DNS_SERVERS=(
   rcode://refused"
 )
 ```
-
-<br/>
-
-<br/>
-
-## 后记
-
-### adblock_rules_update.sh(实验性)
-
-* 自动下载并转换 AdGuard Home 规则集文件
-* 自动将该脚本注册到定时任务，默认每天的凌晨4点11分执行一次
-* 最终生成的规则集文件路径为：`/etc/homeproxy/ruleset/adblockdns.srs`
-* 脚本执行过程的日志文件路径为：`/etc/homeproxy/ruleset/convert.log`
-  * 每当日志文件大小超过 1MB 时脚本会自动执行清理操作
-
-#### 操作步骤
-
-```bash
-# 准备环境，如已存在 bash 命令则忽略
-opkg update
-opkg install bash
-
-# 把该脚本上传到系统除 /tmp 目录以外的任意目录下，脚本代码默认使用的路径为: /etc/homeproxy
-# 然后：
-chmod +x /etc/homeproxy/adblock_rules_update.sh
-
-# 执行脚本(只需要手动执行一次即可，脚本会自动注册定时任务至 系统 - 计划任务 功能中)
-# 注意：
-#    此脚本涉及规则集转换操作，需要占用大量CPU资源
-bash /etc/homeproxy/adblock_rules_update.sh
-```
-
-
-
-#### 新增规则集URL
-
-更改 `adblock_rules_update.sh` 脚本以下内容：
-
-```bash
-#!/bin/bash
-
-# GitHub 镜像URL前缀。如失效，请到 https://ghproxy.link 获取最新前缀
-MIRROR_PREFIX="https://ghgo.xyz"
-# 调整定时任务的执行时间以及当前脚本的存放路径(可选)
-# 请阅读 https://github.com/immortalwrt/homeproxy/issues/161 中的内容
-CRONTAB_EXPR="11 4 * * * bash '/etc/home''proxy/adblock_rules_update.sh'"
-URLS=(
-  # 规则集数组，每行一条URL，需要使用英文半角双引号包裹
-  # 目前仅支持来自于 GitHub 的规则集链接
-  "https://raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt"
-  "https://raw.githubusercontent.com/privacy-protection-tools/anti-AD/refs/heads/master/anti-ad-adguard.txt"
-  # More...
-)
-
-# 你不需要关心脚本其它内容，除非你了解自己在做什么......
-```
-
-<br/>
-
-<br/>
-
-### 其它
-
-deprecated 分支脚本不支持：
-
-* 更新 sing-box 版本
-* 订阅链接
-
-其余写法、功能基本一致。
